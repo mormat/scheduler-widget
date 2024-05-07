@@ -1,0 +1,49 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "create-block/scheduler-widget",
+	"version": "0.1.0",
+	"title": "Scheduler",
+	"category": "widgets",
+	"icon": "smiley",
+	"description": "A google-like scheduler",
+	"example": {},
+        "attributes": {
+            "height": {
+                "type": "integer",
+                "default": 480
+            },
+            "viewMode": {
+                "type": "string",
+                "default": "week"
+            },
+            "initialDate": {
+                "type": "string"
+            },
+            "minHour": {
+                "type": "integer",
+                "default": 6
+            },
+            "maxHour": {
+                "type": "integer",
+                "default": 21
+            },
+            "namespace": {
+                "type": "string",
+                "default": "default"
+            }
+        },
+	"supports": {
+            "color": {
+                "background": false,
+                "text":       false
+            },
+            "html": false
+        },
+	"textdomain": "scheduler-widget",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+        "render": "file:./render.php",
+	"viewScript": "file:./view.js"
+}
