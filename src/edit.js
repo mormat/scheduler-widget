@@ -35,12 +35,12 @@ import { Scheduler } from '@mormat/react-scheduler';
  */
 export default function Edit( { attributes, setAttributes, toggleSelection } ) {
         
-    const { initialDate, height, viewMode, minHour, maxHour, namespace } = attributes;
+    const { initialDate, viewMode, namespace } = attributes;
+    const { width, height, minHour, maxHour } = attributes;
     const currentYear = new Date().getFullYear().toString();
         
     // Event group
     // If provided, the events will be loaded and saved from this specific group
-        
     return (
         <>
             <InspectorControls>
@@ -96,6 +96,15 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                     />
                     
                     <TextControl
+                        label={ __( 'Width (px)', 'scheduler-widget' ) }
+                        value={ width }
+                        onChange={ v => setAttributes( { width: v } ) }
+                        min = "480"
+                        max = "1080"
+                        type="number"
+                    />
+                    
+                    <TextControl
                         label={ __( 'Height (px)', 'scheduler-widget' ) }
                         value={ height }
                         onChange={ v => setAttributes( { height: v } ) }
@@ -103,7 +112,7 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                         max = "1080"
                         type="number"
                     />
-                    
+
                     <TextControl
                         label={ __( 'Events namespace', 'scheduler-widget' ) }
                         help = { __("Display and manage a specific set of events", 'scheduler-widget') }
@@ -116,22 +125,25 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
             </InspectorControls>
 
             <ResizableBox
-                size={ { height, width: '100%' } }
+                size={ { height, width } }
+                minWidth  = "480"
+                maxWidth  = "1080"
                 minHeight = "480"
                 maxHeight = "1080"
                 enable={ {
                     top: false,
-                    right: false,
+                    right: true,
                     bottom: true,
                     left: false,
                     topRight: false,
-                    bottomRight: false,
+                    bottomRight: true,
                     bottomLeft: false,
                     topLeft: false,
                 } }
                 onResizeStop={ ( event, direction, elt, delta ) => {
                     setAttributes( {
-                        height: Math.round(Number(height) + delta.height)
+                        height: Math.round(Number(height) + delta.height),
+                        width:  Math.round(Number(width)  + delta.width),
                     } );
                     toggleSelection( true );
                 } }
@@ -147,7 +159,7 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                     }}
                 >              
                     <Scheduler 
-                        width       = "auto" 
+                        width       = { width }
                         height      = { height }
                         initialDate = { initialDate }
                         viewMode    = { viewMode }

@@ -7,7 +7,6 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 $props = $attributes + [
     'events'    => scheduler_widget_get_events($attributes['namespace']),
-    'width'     => 'auto',
     'editable'  => is_user_logged_in(),
     'draggable' => is_user_logged_in(),
 ];

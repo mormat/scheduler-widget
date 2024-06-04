@@ -9,9 +9,13 @@
 	"description": "A google-like scheduler",
 	"example": {},
         "attributes": {
+            "width": {
+                "type": "integer",
+                "default": 600
+            },
             "height": {
                 "type": "integer",
-                "default": 480
+                "default": 600
             },
             "viewMode": {
                 "type": "string",
@@ -38,7 +42,8 @@
                 "background": false,
                 "text":       false
             },
-            "html": false
+            "html": false,
+            "align": true
         },
 	"textdomain": "scheduler-widget",
 	"editorScript": "file:./index.js",
