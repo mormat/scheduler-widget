@@ -43,7 +43,8 @@
                 "text":       false
             },
             "html": false,
-            "align": true
+            "align": true,
+            "layout": false
         },
 	"textdomain": "scheduler-widget",
 	"editorScript": "file:./index.js",

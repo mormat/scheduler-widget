@@ -33,11 +33,17 @@ import { Scheduler } from '@mormat/react-scheduler';
 
 $(document).ready(function() {
 
-    for (const element of $('.scheduler-widget')) {
+    for (const element of $('.wp-block-create-block-scheduler-widget')) {
 
         const { namespace, ...props } = $(element).data('props');
                 
         const urls  = $(element).data('urls');
+        
+        if (props.align === 'full' || props.align === 'wide') {
+            props.width = 'auto';
+        } else {
+            element.style['max-width'] = 'fit-content';
+        }
            
         props.onEventCreate = function(event) {
                 

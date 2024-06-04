@@ -18,6 +18,8 @@ The purpose of this plugin is to provide an alternative to Google's scheduler.
 
 The **Scheduler Widget** can be added in your pages or posts from the **Wordpress block editor**
 
+Note: this widget renders best on a full width page.
+
 == Frequently Asked Questions ==
  
 = Can I ask you to change something for me? =

@@ -38,7 +38,92 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
     const { initialDate, viewMode, namespace } = attributes;
     const { width, height, minHour, maxHour } = attributes;
     const currentYear = new Date().getFullYear().toString();
+    
+    const blockProps = useBlockProps({
+        style: {}
+    });
+    
+    const isResizeable = (function() {
+        const classNames = blockProps.className.split(' ');
+        for (const notAllowedClassname of ['alignfull', 'alignwide']) {
+            if (classNames.includes(notAllowedClassname)) {
+                return false;
+            }
+        }
+        return true;
+    })();
+    
+    
+    if (isResizeable) {
+        blockProps.style.maxWidth = 'fit-content';
+    }
+    
+    const renderWidget = () => (
+
+        <div style = {{ 
+            width: '100%',
+            height: '100%',
+            overflow: 'hidden'
+        }}>
+
+            <Scheduler 
+                    width       = { isResizeable ? width : 'auto'}
+                    height      = { height }
+                    initialDate = { initialDate }
+                    viewMode    = { viewMode }
+                    minHour     = { minHour }
+                    maxHour     = { maxHour }
+                    editable    = { false }
+                    draggable   = { false }
+                />
+
+            <div style = {{
+                position: 'absolute',
+                top: '0',
+                left: '0',
+                width: '100%',
+                height: '100%',
+                backgroundColor: 'white',
+                opacity: '0.35',
+                cursor: 'not-allowed',
+            }} />
+
+        </div>
+
+    )
+    
+    const withResizableBox = (subject) => (
         
+        <ResizableBox
+            size      = { { height, width: isResizeable ? width : 'auto' } }
+            minWidth  = "480"
+            minHeight = "480"
+            enable={ {
+                top: false,
+                right:       isResizeable,
+                bottom:      true,
+                left:        isResizeable,
+                topRight:    false,
+                bottomRight: isResizeable,
+                bottomLeft:  isResizeable,
+                topLeft:     false,
+            } }
+            onResizeStop={ ( event, direction, elt, delta ) => {
+                setAttributes( {
+                    height: Math.round(Number(height) + delta.height),
+                    width:  Math.round(Number(width)  + delta.width),
+                } );
+                toggleSelection( true );
+            } }
+            onResizeStart={ () => {
+                toggleSelection( false );
+            } }
+        >
+            { subject }
+        </ResizableBox>
+        
+    )
+    
     // Event group
     // If provided, the events will be loaded and saved from this specific group
     return (
@@ -124,65 +209,11 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                 
             </InspectorControls>
 
-            <ResizableBox
-                size={ { height, width } }
-                minWidth  = "480"
-                maxWidth  = "1080"
-                minHeight = "480"
-                maxHeight = "1080"
-                enable={ {
-                    top: false,
-                    right: true,
-                    bottom: true,
-                    left: false,
-                    topRight: false,
-                    bottomRight: true,
-                    bottomLeft: false,
-                    topLeft: false,
-                } }
-                onResizeStop={ ( event, direction, elt, delta ) => {
-                    setAttributes( {
-                        height: Math.round(Number(height) + delta.height),
-                        width:  Math.round(Number(width)  + delta.width),
-                    } );
-                    toggleSelection( true );
-                } }
-                onResizeStart={ () => {
-                    toggleSelection( false );
-                } }
-            >
-            
-                <div { ...useBlockProps() }
-                    style     = { { 
-                        width: '100%', 
-                        height: '100%' 
-                    }}
-                >              
-                    <Scheduler 
-                        width       = { width }
-                        height      = { height }
-                        initialDate = { initialDate }
-                        viewMode    = { viewMode }
-                        minHour     = { minHour }
-                        maxHour     = { maxHour }
-                        editable    = { false }
-                        draggable   = { false }
-                    />
+            <div { ...blockProps } >
+
+                { withResizableBox(renderWidget()) }
                 
-                    <div style = {{
-                        position: 'absolute',
-                        top: '0',
-                        left: '0',
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'white',
-                        opacity: '0.35',
-                        cursor: 'not-allowed',
-                    }}></div>
-                    
-                </div>
-                
-            </ResizableBox>
+            </div>
 
         </>      
     );

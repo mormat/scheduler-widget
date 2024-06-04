@@ -6,10 +6,8 @@
  */
 
 .wp-block-create-block-scheduler-widget {
-    background-color: white;
-    color: black;
-    padding: 2px;
-    overflow: hidden;
+    /* background-color: yellow; */
+    overflow: visible;
 }
 
 @import '@mormat/react-scheduler/dist/mormat_react_scheduler';

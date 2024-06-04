@@ -24,13 +24,10 @@ $dataProps = json_encode($props);
 $dataUrls  = json_encode($urls);
 
 ?>
-<div <?php echo get_block_wrapper_attributes(); ?>
-    
->
-    <div class = "scheduler-widget" 
-         data-props  = "<?php echo esc_attr($dataProps) ?>"
-         data-urls   = "<?php echo esc_attr($dataUrls) ?>"
-    ></div>
-</div>
+<div 
+    <?php echo get_block_wrapper_attributes(); ?>
+    data-props  = "<?php echo esc_attr($dataProps) ?>"
+    data-urls   = "<?php echo esc_attr($dataUrls) ?>"
+></div>
 
 
