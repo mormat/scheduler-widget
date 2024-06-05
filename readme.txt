@@ -6,9 +6,11 @@ Requires at least: 6.5
 Tested up to:      6.5
 Requires PHP:      7.2
 License: GPLv2 or later
-Stable tag: 0.1.1
+Stable tag: 0.1.2
 
 Add a Google-like scheduler to your WordPress site
+
+[youtube https://www.youtube.com/watch?v=J794b-Kz1tA]
 
 == Description ==
 
@@ -32,7 +34,10 @@ na
 
 == Changelog ==
 
-= 0.0.1 =
+= 0.1.2 =
+Added alignment support (wide width, full width, left, center, right)
+
+= 0.1.1 =
 Initial release.
 
 == Screenshots ==

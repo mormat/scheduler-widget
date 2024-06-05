@@ -4,7 +4,7 @@
  * Plugin Name: Scheduler Widget
  * Plugin URI: https://github.com/mormat/scheduler-widget
  * Description: Add a Google-like scheduler to your WordPress site
- * Version: 0.1.1
+ * Version: 0.1.2
  * Requires at least: 6.5
  * Requires PHP: 7.2
  * License: GPLv2
