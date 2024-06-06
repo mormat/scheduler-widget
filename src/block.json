@@ -35,6 +35,9 @@
             "namespace": {
                 "type": "string",
                 "default": "default"
+            },
+            "locale": {
+                "type": "string"
             }
         },
 	"supports": {

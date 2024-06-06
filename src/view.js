@@ -44,6 +44,10 @@ $(document).ready(function() {
         } else {
             element.style['max-width'] = 'fit-content';
         }
+        
+        if (props.locale) {
+            props.locale = props.locale.split('_')[0];
+        }
            
         props.onEventCreate = function(event) {
                 

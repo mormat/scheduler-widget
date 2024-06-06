@@ -11,6 +11,10 @@ $props = $attributes + [
     'draggable' => is_user_logged_in(),
 ];
 
+if (!$props['locale']) {
+    $props['locale'] = get_locale();
+}
+
 $urls = array_map(fn($url) => wp_nonce_url($url, 'scheduler_widget_events'), [
     'saveEvent' => admin_url('admin-ajax.php?' . http_build_query([
         'action' => 'scheduler_widget_save_event',

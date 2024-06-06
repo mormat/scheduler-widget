@@ -44,8 +44,16 @@ import { Scheduler } from '@mormat/react-scheduler';
  */
 export default function Edit( { attributes, setAttributes, toggleSelection } ) {
         
-    const { initialDate, viewMode, namespace } = attributes;
-    const { width, height, minHour, maxHour } = attributes;
+    const { 
+        initialDate, 
+        viewMode, 
+        width, 
+        height, 
+        minHour, 
+        maxHour,
+        namespace,
+        locale
+    } = attributes;
     const currentYear = new Date().getFullYear().toString();
     
     const blockProps = useBlockProps({
@@ -207,6 +215,14 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                         help = { __("Display and manage a specific set of events", 'scheduler-widget') }
                         value={ namespace }
                         onChange={ v => setAttributes( { namespace: v } ) }
+                    />
+                    
+                    <TextControl
+                        label={ __( 'Dates language code', 'scheduler-widget' ) }
+                        help = { __("The language code used for displaying the dates in the scheduler. It must be ISO 639-1 compliant. If not provided, the current site language will be used", 'scheduler-widget') }
+                        value={ locale }
+                        onChange={ v => setAttributes( { locale: v } ) }
+                        placeholder= { __("Examples: en, fr or es", 'scheduler-widget') }
                     />
                     
                 </PanelBody>
