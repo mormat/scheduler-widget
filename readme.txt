@@ -6,7 +6,7 @@ Requires at least: 6.5
 Tested up to:      6.5
 Requires PHP:      7.2
 License: GPLv2 or later
-Stable tag: 0.1.2
+Stable tag: 0.1.3
 
 Add a Google-like scheduler to your WordPress site
 
@@ -33,6 +33,9 @@ Yes absolutely.
 na
 
 == Changelog ==
+
+= 0.1.3 =
+Added 'Dates language code' option
 
 = 0.1.2 =
 Added alignment support (wide width, full width, left, center, right)
