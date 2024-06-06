@@ -10,11 +10,11 @@ Stable tag: 0.1.2
 
 Add a Google-like scheduler to your WordPress site
 
-[youtube https://www.youtube.com/watch?v=J794b-Kz1tA]
-
 == Description ==
 
 **Scheduler Widget** is a free WordPress plugin that will display an events scheduler component in your site.
+
+[youtube https://www.youtube.com/watch?v=J794b-Kz1tA]
 
 The purpose of this plugin is to provide an alternative to Google's scheduler.
 

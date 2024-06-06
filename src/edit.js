@@ -21,7 +21,16 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
  */
 import './editor.scss';
 
-import { PanelBody, TextControl, ToggleControl, ResizableBox, SelectControl, NumberControl} from '@wordpress/components';
+import { 
+    PanelBody, 
+    TextControl, 
+    ToggleControl, 
+    ResizableBox, 
+    SelectControl, 
+    NumberControl 
+} from '@wordpress/components';
+
+
 
 import { Scheduler } from '@mormat/react-scheduler';
 
@@ -43,18 +52,14 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
         style: {}
     });
     
-    const isResizeable = (function() {
+    const isFixedWidth = (function() {
         const classNames = blockProps.className.split(' ');
-        for (const notAllowedClassname of ['alignfull', 'alignwide']) {
-            if (classNames.includes(notAllowedClassname)) {
-                return false;
-            }
-        }
-        return true;
+        if (classNames.includes('alignfull')) return true;
+        if (classNames.includes('alignwide')) return true;
+        return false;
     })();
     
-    
-    if (isResizeable) {
+    if (!isFixedWidth) {
         blockProps.style.maxWidth = 'fit-content';
     }
     
@@ -67,7 +72,7 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
         }}>
 
             <Scheduler 
-                    width       = { isResizeable ? width : 'auto'}
+                    width       = { isFixedWidth ? 'auto': width }
                     height      = { height }
                     initialDate = { initialDate }
                     viewMode    = { viewMode }
@@ -95,17 +100,17 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
     const withResizableBox = (subject) => (
         
         <ResizableBox
-            size      = { { height, width: isResizeable ? width : 'auto' } }
+            size      = { { height, width: isFixedWidth ? 'auto' : width } }
             minWidth  = "480"
             minHeight = "480"
             enable={ {
                 top: false,
-                right:       isResizeable,
+                right:       !isFixedWidth,
                 bottom:      true,
-                left:        isResizeable,
+                left:        !isFixedWidth,
                 topRight:    false,
-                bottomRight: isResizeable,
-                bottomLeft:  isResizeable,
+                bottomRight: !isFixedWidth,
+                bottomLeft:  !isFixedWidth,
                 topLeft:     false,
             } }
             onResizeStop={ ( event, direction, elt, delta ) => {
@@ -124,8 +129,6 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
         
     )
     
-    // Event group
-    // If provided, the events will be loaded and saved from this specific group
     return (
         <>
             <InspectorControls>
@@ -161,7 +164,7 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                         onChange={ v => setAttributes( { initialDate: v } ) }
                         type="date"
                     />
-                    
+
                     <TextControl
                         label={ __( 'Hour min', 'scheduler-widget' ) }
                         type="number"
@@ -170,7 +173,7 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                         min = "5"
                         max = "10"
                     />
-                    
+
                     <TextControl
                         label={ __( 'Hour max', 'scheduler-widget' ) }
                         type="number"
@@ -178,8 +181,8 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                         onChange={ v => setAttributes( { maxHour: v } ) }
                         min = "18"
                         max = "22"
-                    />
-                    
+                    />                        
+
                     <TextControl
                         label={ __( 'Width (px)', 'scheduler-widget' ) }
                         value={ width }
@@ -187,8 +190,9 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                         min = "480"
                         max = "1080"
                         type="number"
+                        disabled = { isFixedWidth }
                     />
-                    
+
                     <TextControl
                         label={ __( 'Height (px)', 'scheduler-widget' ) }
                         value={ height }
