@@ -25,11 +25,23 @@ import { createRoot } from 'react-dom/client';
 
 import $ from 'jquery';
 
-import { Scheduler } from '@mormat/react-scheduler';
+import { 
+    Scheduler,
+    withEventForm,
+    DefaultEventForm,
+    utils
+} from '@mormat/react-scheduler';
+
+import { withBreakpoint } from './utils';
 
 /* eslint-disable no-console */
 // console.log( 'Hello World! (from create-block-scheduler-widget block)' );
 /* eslint-enable no-console */
+
+const SchedulerWithEventForm = withEventForm(
+    withBreakpoint( Scheduler ), 
+    DefaultEventForm
+);
 
 $(document).ready(function() {
 
@@ -39,49 +51,78 @@ $(document).ready(function() {
                 
         const urls  = $(element).data('urls');
         
+        for (const k of ['minHour', 'maxHour', 'width', 'height']) {
+            if (typeof props[k] === 'string' || props[k] instanceof String) {
+                props[k] = parseInt(props[k]);
+            }
+        }
+        
         if (props.align === 'full' || props.align === 'wide') {
             props.width = 'auto';
         } else {
-            element.style['max-width'] = 'fit-content';
+            element.style['max-width'] = 'none';
+            if (props.width) {
+                element.style['width'] = props.width + 'px';
+            }
+            if (props.width) {
+                element.style['height'] = props.height + 'px';
+            }
         }
         
         if (props.locale) {
-            props.locale = props.locale.split('_')[0];
+            props.dateLocale = props.locale.split('_')[0];
+            delete props.locale;
         }
-           
-        props.onEventCreate = function(event) {
+        
+        props.onEventCreate = function(values, { scheduler }) {
                 
             $.post({
                 url:  urls['saveEvent'],
-                data: { ...event.getData(), namespace, id: null },
+                data: { ...values, namespace, id: null },
                 success: function( { data }) {
-                    event.id = data.id;    
+                    scheduler.replaceEvent(data, i => i.id == values.id)
                 }
             });
                
         }
 
-        props.onEventUpdate = function(event) {
+        props.onEventUpdate = function(values, { valuesBefore }) {
+    
+            const url  = urls['saveEvent'];
+            const data = { ...valuesBefore, ...values, namespace }
+
+            for (const k of ['start', 'end']) {    
+                data[k] = utils.format_date(
+                    'yyyy-mm-dd hh:ii',
+                    data[k]
+                );
+            }
+
+            $.post({ url, data });
+                
+        }
+        
+        props.onEventDelete = function(values) {
 
             $.post({
-                url:  urls['saveEvent'],
-                data: { ...event.getData(), namespace } 
+                url:  urls['deleteEvent'],
+                data: { ...values, namespace }
             });
 
         }
         
-        props.onEventDelete = function(event) {
-
-            $.post({
-                url:  urls['deleteEvent'],
-                data: { ...event.getData(), namespace }
-            });
-
+        if (props.draggable) {
+            props.onEventDrop = (values, options) => {
+                props.onEventUpdate(values, options);
+            };
+            props.onEventResize = (values, options) => {
+                props.onEventUpdate(values, options);
+            };
         }
 
         const root = createRoot(element);
 
-        root.render( <Scheduler { ... props } /> )
+        root.render( <SchedulerWithEventForm { ... props } /> )
         
     }
     

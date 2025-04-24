@@ -30,9 +30,11 @@ import {
     NumberControl 
 } from '@wordpress/components';
 
+import { Scheduler as BaseScheduler } from '@mormat/react-scheduler';
 
+import { withBreakpoint } from './utils';
 
-import { Scheduler } from '@mormat/react-scheduler';
+const Scheduler = withBreakpoint( BaseScheduler );
 
 /**
  * The edit function describes the structure of your block in the context of the

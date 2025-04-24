@@ -10,4 +10,31 @@
     overflow: visible;
 }
 
-@import '@mormat/react-scheduler/dist/mormat_react_scheduler';
+@import '@mormat/react-scheduler/dist/react_scheduler';
+
+.mormat-scheduler-Header {
+    min-height: 80px;
+    position: relative;
+    h4 {
+        position: absolute;
+        width: 100%;
+        bottom: 0px;
+    }
+}
+
+.jscheduler_ui-event-day {
+    padding: 0;
+}
+
+.jscheduler_ui-event {
+    font-size: small;
+}
+
+.scheduler-widget-withBreakpoint-xs {
+    
+    th[data-hour] {
+        font-size: xx-small;
+        overflow: hidden;
+    }
+    
+}
