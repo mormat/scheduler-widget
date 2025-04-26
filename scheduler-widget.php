@@ -3,7 +3,7 @@
 /*
  * Plugin Name: Scheduler Widget
  * Plugin URI: https://github.com/mormat/scheduler-widget
- * Description: Add a Google-like scheduler to your WordPress site
+ * Description: A scheduler widget inspired by Google Calendar
  * Version: 0.1.3
  * Requires at least: 6.5
  * Requires PHP: 7.2
@@ -11,22 +11,46 @@
  * License URI: https://www.gnu.org/licenses/gpl-2.0.html
  * Author: Mathieu MOREL
  * Author URI: http://github.com/mormat
+ * Text Domain: scheduler-widget
+ * Domain Path: /languages
  */
 
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 /**
- * Registers the block using the metadata loaded from the `block.json` file.
- * Behind the scenes, it registers also all assets so they can be enqueued
- * through the block editor in the corresponding context.
- *
- * @see https://developer.wordpress.org/reference/functions/register_block_type/
- */
-function scheduler_widget_block_init() {
-    register_block_type( __DIR__ . '/build' );
+    * Registers the block using the metadata loaded from the `block.json` file.
+    * Behind the scenes, it registers also all assets so they can be enqueued
+    * through the block editor in the corresponding context.
+    *
+    * @see https://developer.wordpress.org/reference/functions/register_block_type/
+*/
+function scheduler_widget_init() {
+    
+    load_plugin_textdomain(
+        'scheduler-widget',
+        false,
+        basename( dirname( __FILE__ ) ) . '/languages'
+    );
+    
+    register_block_type( __DIR__ . '/build' );   
 }
 
-add_action( 'init', 'scheduler_widget_block_init' );
+add_action( 'init', 'scheduler_widget_init' );
+
+function scheduler_widget_plugins_loaded() {
+    
+    load_plugin_textdomain(
+        'scheduler-widget',
+        false,
+        implode(
+            DIRECTORY_SEPARATOR,
+            [ basename(__DIR__), 'languages' ]
+        ),
+    );
+    
+}
+
+add_action('plugins_loaded', 'scheduler_widget_plugins_loaded' );
 
 function scheduler_widget_activation_hook()
 {

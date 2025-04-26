@@ -6,7 +6,7 @@
 	"title": "Scheduler",
 	"category": "widgets",
 	"icon": "smiley",
-	"description": "A google-like scheduler",
+	"description": "Allows you to add a Google-like calendar to your wordpress website",
 	"example": {},
         "attributes": {
             "width": {
