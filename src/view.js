@@ -26,7 +26,7 @@ import { createRoot } from 'react-dom/client';
 import $ from 'jquery';
 
 import { 
-    Scheduler,
+    Scheduler as BaseScheduler,
     withEventForm,
     DefaultEventForm,
     utils
@@ -38,10 +38,9 @@ import { withBreakpoint } from './utils';
 // console.log( 'Hello World! (from create-block-scheduler-widget block)' );
 /* eslint-enable no-console */
 
-const SchedulerWithEventForm = withEventForm(
-    withBreakpoint( Scheduler ), 
-    DefaultEventForm
-);
+const Scheduler = withBreakpoint( BaseScheduler );
+
+const SchedulerWithEventForm = withEventForm(Scheduler, DefaultEventForm);
 
 $(document).ready(function() {
 
@@ -122,7 +121,12 @@ $(document).ready(function() {
 
         const root = createRoot(element);
 
-        root.render( <SchedulerWithEventForm { ... props } /> )
+        if (props.editable) {
+            root.render( <SchedulerWithEventForm { ... props } /> )
+        } else {
+            root.render( <Scheduler { ... props } /> )
+        }
+        
         
     }
     
