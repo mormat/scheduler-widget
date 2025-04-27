@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Scheduler Widget\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2025-04-26 10:37+0000\n"
-"PO-Revision-Date: 2025-04-26 10:42+0000\n"
+"PO-Revision-Date: 2025-04-27 18:10+0000\n"
 "Last-Translator: \n"
 "Language-Team: Français\n"
 "Language: fr_FR\n"
@@ -15,13 +15,70 @@ msgstr ""
 "X-Loco-Version: 2.7.2; wp-6.8\n"
 "X-Domain: scheduler-widget"
 
-#. Description of the plugin
-msgctxt "plugin description"
-msgid "A scheduler widget inspired by Google Calendar"
-msgstr "Un widget calendrier insipiré de Google Calendar"
+#: build/render.php:26
+msgid "Add an event"
+msgstr "Ajouter un évènement"
 
 #: build/block.json:1
 msgctxt "block description"
 msgid "Allows you to add a Google-like calendar to your wordpress website"
 msgstr ""
 "Vous permet d'ajouter un calendrier de type Google à votre site WordPress"
+
+#: build/render.php:24
+msgid "Cancel"
+msgstr "Annuler"
+
+#: build/render.php:22
+msgid "Color"
+msgstr "Couleur"
+
+#: build/render.php:16
+msgid "day"
+msgstr "jour"
+
+#: build/render.php:25
+msgid "Delete"
+msgstr "Supprimer"
+
+#: build/render.php:28
+#, php-format
+msgid "Delete the '%event_label%' event ?"
+msgstr "Supprimer l'évènement '%event_label%'  ?"
+
+#: build/render.php:19
+msgid "Description"
+msgstr "Description"
+
+#: build/render.php:27
+msgid "Edit the event"
+msgstr "Modifier l'évènement"
+
+#: build/render.php:21
+msgid "Ends at"
+msgstr "Se termine à"
+
+#: build/render.php:18
+msgid "month"
+msgstr "mois"
+
+#: build/render.php:23
+msgid "Ok"
+msgstr "Ok"
+
+#. Description of the plugin
+msgctxt "plugin description"
+msgid "A scheduler widget inspired by Google Calendar"
+msgstr "Un widget calendrier inspiré de Google Calendar"
+
+#: build/render.php:20
+msgid "Starts from"
+msgstr "Commence à"
+
+#: build/render.php:15
+msgid "Today"
+msgstr "Aujourd'hui"
+
+#: build/render.php:17
+msgid "week"
+msgstr "semaine"

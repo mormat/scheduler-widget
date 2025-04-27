@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Scheduler Widget\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-04-26 10:37+0000\n"
+"POT-Creation-Date: 2025-04-27 17:58+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -25,3 +25,61 @@ msgstr ""
 msgctxt "block description"
 msgid "Allows you to add a Google-like calendar to your wordpress website"
 msgstr ""
+
+#: build/render.php:15
+msgid "Today"
+msgstr ""
+
+#: build/render.php:16
+msgid "day"
+msgstr ""
+
+#: build/render.php:17
+msgid "week"
+msgstr ""
+
+#: build/render.php:18
+msgid "month"
+msgstr ""
+
+#: build/render.php:19
+msgid "Description"
+msgstr ""
+
+#: build/render.php:20
+msgid "Starts from"
+msgstr ""
+
+#: build/render.php:21
+msgid "Ends at"
+msgstr ""
+
+#: build/render.php:22
+msgid "Color"
+msgstr ""
+
+#: build/render.php:23
+msgid "Ok"
+msgstr ""
+
+#: build/render.php:24
+msgid "Cancel"
+msgstr ""
+
+#: build/render.php:25
+msgid "Delete"
+msgstr ""
+
+#: build/render.php:26
+msgid "Add an event"
+msgstr ""
+
+#: build/render.php:27
+msgid "Edit the event"
+msgstr ""
+
+#: build/render.php:28
+#, php-format
+msgid "Delete the '%event_label%' event ?"
+msgstr ""
+

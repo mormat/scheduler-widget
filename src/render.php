@@ -11,6 +11,26 @@ $props = $attributes + [
     'draggable' => is_user_logged_in(),
 ];
 
+$props['translations'] = [
+    "header.today" =>        __("Today", 'scheduler-widget'),
+    "header.day"   =>        __("day", 'scheduler-widget'),
+    "header.week"  =>        __("week", 'scheduler-widget'),
+    "header.month" =>        __("month", 'scheduler-widget'),
+    "event_desc_label" =>    __("Description", 'scheduler-widget'),
+    "event_start_label" =>   __("From", 'scheduler-widget'),
+    "event_end_label"   =>   __("To",    'scheduler-widget'),
+    "event_bgcolor_label" => __('Color', 'scheduler-widget'),
+    "ok_btn" =>              __("Ok",   'scheduler-widget'),
+    "cancel_btn" =>          __("Cancel", 'scheduler-widget'),
+    "delete_btn" =>          __("Delete", 'scheduler-widget'),
+    "add_event_btn" =>       __("Add an event"),
+    "edit_event_btn" =>      __("Edit the event"),
+    'delete_event_confirm_msg' => __(
+        "Delete the '%event_label%' event ?", 
+        'scheduler-widget'
+    )
+];
+
 if (!$props['locale']) {
     $props['locale'] = get_locale();
 }
