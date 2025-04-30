@@ -3,10 +3,10 @@ Contributors: mormat
 Donate link: https://www.buymeacoffee.com/mormat
 Tags: scheduler, agenda, planner, widget, block
 Requires at least: 6.5
-Tested up to:      6.5
+Tested up to:      6.8
 Requires PHP:      7.2
 License: GPLv2 or later
-Stable tag: 0.1.3
+Stable tag: 0.1.4
 
 Add a Google-like scheduler to your WordPress site
 
@@ -33,6 +33,10 @@ Yes absolutely.
 na
 
 == Changelog ==
+
+= 0.1.4 =
+Fixed truncated text for tasks in month view
+Added german and french translations
 
 = 0.1.3 =
 Added 'Dates language code' option

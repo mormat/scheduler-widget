@@ -4,7 +4,7 @@
  * Plugin Name: Scheduler Widget
  * Plugin URI: https://github.com/mormat/scheduler-widget
  * Description: A scheduler widget inspired by Google Calendar
- * Version: 0.1.3
+ * Version: 0.1.4
  * Requires at least: 6.5
  * Requires PHP: 7.2
  * License: GPLv2
