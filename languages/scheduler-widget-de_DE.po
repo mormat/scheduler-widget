@@ -1,0 +1,82 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: Scheduler Widget\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2025-04-26 10:37+0000\n"
+"PO-Revision-Date: 2025-04-27 18:10+0000\n"
+"Last-Translator: \n"
+"Language-Team: Deutsch\n"
+"Language: de_DE\n"
+"Plural-Forms: nplurals=2; plural=n > 1;\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Loco https://localise.biz/\n"
+"X-Loco-Version: 2.7.2; wp-6.8\n"
+"X-Domain: scheduler-widget"
+
+#: build/render.php:26
+msgid "Add an event"
+msgstr "Termin hinzufügen"
+
+#: build/block.json:1
+msgid "Allows you to add a Google-like calendar to your wordpress website"
+msgstr ""
+"Erlaubt das Hinzufügen eines Google-ähnlichen Kalenders zu Ihrer Wordpress-Seite"
+
+#: build/render.php:24
+msgid "Cancel"
+msgstr "Abbrechen"
+
+#: build/render.php:22
+msgid "Color"
+msgstr "Farbe"
+
+#: build/render.php:16
+msgid "day"
+msgstr "Tag"
+
+#: build/render.php:25
+msgid "Delete"
+msgstr "Löschen"
+
+#: build/render.php:28
+#, php-format
+msgid "Delete the '%event_label%' event ?"
+msgstr "Den Termin '%event_label%' löschen?"
+
+#: build/render.php:19
+msgid "Description"
+msgstr "Beschreibung"
+
+#: build/render.php:27
+msgid "Edit the event"
+msgstr "Termin ändern"
+
+#: build/render.php:21
+msgid "Ends at"
+msgstr "Endet um"
+
+#: build/render.php:18
+msgid "month"
+msgstr "Monat"
+
+#: build/render.php:23
+msgid "Ok"
+msgstr "OK"
+
+#. Description of the plugin
+msgid "A scheduler widget inspired by Google Calendar"
+msgstr "Ein Termin-Widget innspiriert vom Google-Kalender"
+
+#: build/render.php:20
+msgid "Starts from"
+msgstr "Beginnt um"
+
+#: build/render.php:15
+msgid "Today"
+msgstr "Heute"
+
+#: build/render.php:17
+msgid "week"
+msgstr "Woche"
