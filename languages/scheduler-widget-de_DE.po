@@ -61,6 +61,10 @@ msgstr "Endet um"
 msgid "month"
 msgstr "Monat"
 
+#: build/render.php:18
+msgid "year"
+msgstr "Jahr"
+
 #: build/render.php:23
 msgid "Ok"
 msgstr "OK"

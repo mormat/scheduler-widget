@@ -50,4 +50,4 @@ Initial release.
 == Screenshots ==
 1. month view
 2. week view
-3. create/update and delete events in admin section
+3. year view

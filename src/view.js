@@ -26,19 +26,17 @@ import { createRoot } from 'react-dom/client';
 import $ from 'jquery';
 
 import { 
-    Scheduler as BaseScheduler,
+    Scheduler,
     withEventForm,
     DefaultEventForm,
     utils
 } from '@mormat/react-scheduler';
 
-import { withBreakpoint } from './utils';
+import { cleanSchedulerProps } from './utils';
 
 /* eslint-disable no-console */
 // console.log( 'Hello World! (from create-block-scheduler-widget block)' );
 /* eslint-enable no-console */
-
-const Scheduler = withBreakpoint( BaseScheduler );
 
 const SchedulerWithEventForm = withEventForm(Scheduler, DefaultEventForm);
 
@@ -50,12 +48,6 @@ $(document).ready(function() {
                 
         const urls  = $(element).data('urls');
         
-        for (const k of ['minHour', 'maxHour', 'width', 'height']) {
-            if (typeof props[k] === 'string' || props[k] instanceof String) {
-                props[k] = parseInt(props[k]);
-            }
-        }
-        
         if (props.align === 'full' || props.align === 'wide') {
             props.width = 'auto';
         } else {
@@ -66,11 +58,6 @@ $(document).ready(function() {
             if (props.width) {
                 element.style['height'] = props.height + 'px';
             }
-        }
-        
-        if (props.locale) {
-            props.dateLocale = props.locale.split('_')[0];
-            delete props.locale;
         }
         
         props.onEventCreate = function(values, { scheduler }) {
@@ -118,13 +105,17 @@ $(document).ready(function() {
                 props.onEventUpdate(values, options);
             };
         }
-
+        
+        props['useBreakpoint'] = true;
+        
+        const cleanedProps = cleanSchedulerProps(props);
+        
         const root = createRoot(element);
 
         if (props.editable) {
-            root.render( <SchedulerWithEventForm { ... props } /> )
+            root.render( <SchedulerWithEventForm { ... cleanedProps } /> )
         } else {
-            root.render( <Scheduler { ... props } /> )
+            root.render( <Scheduler { ... cleanedProps } /> )
         }
         
         

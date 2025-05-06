@@ -42,6 +42,10 @@ msgstr ""
 msgid "month"
 msgstr ""
 
+#: build/render.php:18
+msgid "year"
+msgstr ""
+
 #: build/render.php:19
 msgid "Description"
 msgstr ""

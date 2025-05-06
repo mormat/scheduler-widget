@@ -1,34 +1,21 @@
-function calcBreakpoint( props ) {
+function cleanSchedulerProps(props) {
     
-    const width = parseInt( props.width );
-    if (!isNaN(width)) {
-        if (width < 576) {
-            return 'xs';
+    // values below should be integers
+    for (const k of ['minHour', 'maxHour', 'width', 'height']) {
+        if (typeof props[k] === 'string' || props[k] instanceof String) {
+            props[k] = parseInt(props[k]);
         }
     }
     
-    return 'xxl';
-}
-
-function withBreakpoint(WrappedComponent) {
-    
-    return function( props ) {
-        
-        const breakpoint = calcBreakpoint( props );
-        
-        return (
-            <div
-                className = { "scheduler-widget-withBreakpoint-" + breakpoint }
-                style = { { height: "100%" }}
-            >
-                <WrappedComponent { ...props } />
-            </div>
-        );
-        
+    if (props.locale) {
+        props.dateLocale = props.locale.split('_')[0];
+        delete props.locale;
     }
     
+    return props;
+    
 }
 
-export {
-    withBreakpoint
+export { 
+    cleanSchedulerProps 
 }

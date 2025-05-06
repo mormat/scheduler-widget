@@ -62,6 +62,10 @@ msgstr "Se termine à"
 msgid "month"
 msgstr "mois"
 
+#: build/render.php:18
+msgid "year"
+msgstr "année"
+
 #: build/render.php:23
 msgid "Ok"
 msgstr "Ok"

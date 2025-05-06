@@ -9,6 +9,7 @@ $props = $attributes + [
     'events'    => scheduler_widget_get_events($attributes['namespace']),
     'editable'  => is_user_logged_in(),
     'draggable' => is_user_logged_in(),
+    'locale'    => null,
 ];
 
 $props['translations'] = [
@@ -16,6 +17,7 @@ $props['translations'] = [
     "header.day"   =>        __("day", 'scheduler-widget'),
     "header.week"  =>        __("week", 'scheduler-widget'),
     "header.month" =>        __("month", 'scheduler-widget'),
+    "header.year"  =>        __("year",  'scheduler-widget'),
     "event_desc_label" =>    __("Description", 'scheduler-widget'),
     "event_start_label" =>   __("Starts from", 'scheduler-widget'),
     "event_end_label"   =>   __("Ends at",    'scheduler-widget'),
