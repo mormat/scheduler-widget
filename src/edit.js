@@ -30,11 +30,7 @@ import {
     NumberControl 
 } from '@wordpress/components';
 
-import { Scheduler as BaseScheduler } from '@mormat/react-scheduler';
-
-import { withBreakpoint } from './utils';
-
-const Scheduler = withBreakpoint( BaseScheduler );
+import { Scheduler } from '@mormat/react-scheduler';
 
 /**
  * The edit function describes the structure of your block in the context of the
@@ -90,7 +86,8 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                     maxHour     = { maxHour }
                     editable    = { false }
                     draggable   = { false }
-                />
+                    useBreakpoint = { true }
+            />
 
             <div style = {{
                 position: 'absolute',
@@ -150,16 +147,20 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                         value={ viewMode }
                         options={ [
                             { 
-                                label: __('Day', 'scheduler-widget'), 
+                                label: __('day', 'scheduler-widget'), 
                                 value: 'day' 
                             },
                             { 
-                                label: __('Week', 'scheduler-widget'), 
+                                label: __('week', 'scheduler-widget'), 
                                 value: 'week' 
                             },
                             { 
-                                label: __('Month', 'scheduler-widget'),
+                                label: __('month', 'scheduler-widget'),
                                 value: 'month' 
+                            },
+                            { 
+                                label: __('year', 'scheduler-widget'),
+                                value: 'year' 
                             },
                         ] }
                         onChange={ ( value ) =>
