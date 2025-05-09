@@ -44,7 +44,13 @@ $urls = array_map(fn($url) => wp_nonce_url($url, 'scheduler_widget_events'), [
     ]))
 ]);
 
-$dataProps = json_encode($props);
+$props = apply_filters(
+    'scheduler_widget_filter_props', 
+    $props, 
+    ['namespace' => $attributes['namespace']]
+);
+
+$dataProps = json_encode($props ?? []);
 $dataUrls  = json_encode($urls);
 
 ?>
