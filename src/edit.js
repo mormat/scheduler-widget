@@ -41,9 +41,7 @@ import SchedulerPreview      from './components/SchedulerPreview';
 export default function Edit( { attributes, setAttributes, toggleSelection } ) {
         
     const blockProps = useBlockProps({
-        style: {
-            border: "10px dotted blue"
-        }
+        style: {}
     });
     
     const {
