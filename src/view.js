@@ -23,101 +23,127 @@
 import React          from 'react';
 import { createRoot } from 'react-dom/client';
 
+import { useState } from '@wordpress/element';
+
 import $ from 'jquery';
 
+import Scheduler from './components/Scheduler';
+
 import { 
-    Scheduler,
     withEventForm,
     DefaultEventForm,
     utils
 } from '@mormat/react-scheduler';
 
-import { cleanSchedulerProps } from './utils';
-
 /* eslint-disable no-console */
 // console.log( 'Hello World! (from create-block-scheduler-widget block)' );
 /* eslint-enable no-console */
 
+import Overlay from './components/Overlay';
+
 const SchedulerWithEventForm = withEventForm(Scheduler, DefaultEventForm);
+
+function View({element}) {
+
+    const [isSaving, setSaving] = useState();
+
+    const { namespace, ...props } = $(element).data('props');
+
+    const urls  = $(element).data('urls');
+
+    if (props.align === 'full' || props.align === 'wide') {
+        props.width = 'auto';
+    } else {
+        element.style['max-width'] = 'none';
+        if (props.width) {
+            element.style['width'] = props.width + 'px';
+        }
+        if (props.width) {
+            element.style['height'] = props.height + 'px';
+        }
+    }
+
+    props.onEventCreate = function(values, { scheduler }) {
+
+        setSaving(true);
+
+        $.post({
+            url:  urls['saveEvent'],
+            data: { ...values, namespace, id: null },
+            success: function( { data }) {
+                scheduler.replaceEvent(data, i => i.id == values.id);
+                
+            }
+        }).always(function() {
+            setSaving(false);
+        });
+
+    }
+
+    props.onEventUpdate = function(values, { valuesBefore }) {
+
+        const url  = urls['saveEvent'];
+        const data = { ...valuesBefore, ...values, namespace }
+
+        for (const k of ['start', 'end']) {    
+            data[k] = utils.format_date(
+                'yyyy-mm-dd hh:ii',
+                data[k]
+            );
+        }
+
+        setSaving(true);
+        $.post({ url, data }).always(function() {
+            setSaving(false);
+        });
+
+    }
+
+    props.onEventDelete = function(values) {
+
+        $.post({
+            url:  urls['deleteEvent'],
+            data: { ...values, namespace }
+        });
+
+    }
+
+    if (props.draggable) {
+        props.onEventDrop = (values, options) => {
+            props.onEventUpdate(values, options);
+        };
+        props.onEventResize = (values, options) => {
+            props.onEventUpdate(values, options);
+        };
+    }
+
+    props['useBreakpoint'] = true;
+    
+    return (
+        <div 
+            className="scheduler_widget_View"
+            style = {{ 
+                width: '100%',
+                height: '100%',
+                overflow: 'hidden',
+                position: 'relative'
+            }}
+        >
+            { isSaving && <Overlay style = {{ zIndex: 99998 }} /> }
+            { props.editable && <SchedulerWithEventForm { ... props } /> }
+            { !props.editable && <Scheduler { ... props } /> }
+        </div>
+    )
+    
+}
 
 $(document).ready(function() {
 
     for (const element of $('.wp-block-create-block-scheduler-widget')) {
-
-        const { namespace, ...props } = $(element).data('props');
-                
-        const urls  = $(element).data('urls');
-        
-        if (props.align === 'full' || props.align === 'wide') {
-            props.width = 'auto';
-        } else {
-            element.style['max-width'] = 'none';
-            if (props.width) {
-                element.style['width'] = props.width + 'px';
-            }
-            if (props.width) {
-                element.style['height'] = props.height + 'px';
-            }
-        }
-        
-        props.onEventCreate = function(values, { scheduler }) {
-                
-            $.post({
-                url:  urls['saveEvent'],
-                data: { ...values, namespace, id: null },
-                success: function( { data }) {
-                    scheduler.replaceEvent(data, i => i.id == values.id)
-                }
-            });
-               
-        }
-
-        props.onEventUpdate = function(values, { valuesBefore }) {
-    
-            const url  = urls['saveEvent'];
-            const data = { ...valuesBefore, ...values, namespace }
-
-            for (const k of ['start', 'end']) {    
-                data[k] = utils.format_date(
-                    'yyyy-mm-dd hh:ii',
-                    data[k]
-                );
-            }
-
-            $.post({ url, data });
-                
-        }
-        
-        props.onEventDelete = function(values) {
-
-            $.post({
-                url:  urls['deleteEvent'],
-                data: { ...values, namespace }
-            });
-
-        }
-        
-        if (props.draggable) {
-            props.onEventDrop = (values, options) => {
-                props.onEventUpdate(values, options);
-            };
-            props.onEventResize = (values, options) => {
-                props.onEventUpdate(values, options);
-            };
-        }
-        
-        props['useBreakpoint'] = true;
-        
-        const cleanedProps = cleanSchedulerProps(props);
         
         const root = createRoot(element);
 
-        if (props.editable) {
-            root.render( <SchedulerWithEventForm { ... cleanedProps } /> )
-        } else {
-            root.render( <Scheduler { ... cleanedProps } /> )
-        }
-        
+        root.render( <View element = { element } /> );
         
     }
     

@@ -33,3 +33,6 @@ node_modules/
 # Netbeans folders
 /nbproject
 /.netbeans/nbproject/private/
+
+# others
+/temp

@@ -16,9 +16,13 @@ Add a Google-like scheduler to your WordPress site
 
 [youtube https://www.youtube.com/watch?v=J794b-Kz1tA]
 
-The purpose of this plugin is to provide an alternative to Google's scheduler.
-
 The **Scheduler Widget** can be added in your pages or posts from the **Wordpress block editor**
+
+Features :
+- Four view modes available: day, week, month and year
+- Events can be displayed by groups (for instance : tasks by persons or reservations by rooms)
+- Filter hook to programmatically override the properties of the scheduler
+- Drag and drop support
 
 Note: this widget renders best on a full width page.
 
@@ -26,13 +30,16 @@ Note: this widget renders best on a full width page.
  
 = Can I ask you to change something for me? =
  
-Yes absolutely.
+Yes absolutely. Please not that I also like coffee ([https://buymeacoffee.com](https://www.buymeacoffee.com/mormat))
  
 == Upgrade Notice ==
 
 na
 
 == Changelog ==
+
+= 0.1.6 =
+Events can be displayed by groups
 
 = 0.1.5 =
 Added new year view
@@ -52,6 +59,9 @@ Added alignment support (wide width, full width, left, center, right)
 Initial release.
 
 == Screenshots ==
-1. month view
-2. week view
-3. year view
+1. agenda (month view)
+2. agenda (week view)
+3. agenda (year view)
+4. events by groups (day view)
+5. events by groups (month view)
+6. events by groups (year view)

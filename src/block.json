@@ -38,6 +38,10 @@
             },
             "locale": {
                 "type": "string"
+            },
+            "showGroups" : {
+                "type": "boolean",
+                "default": false
             }
         },
 	"supports": {

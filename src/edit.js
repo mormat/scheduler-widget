@@ -21,10 +21,15 @@ import { InspectorControls, useBlockProps } from '@wordpress/block-editor';
  */
 import './editor.scss';
 
-
 import {
     getAlignFromBlockProps
 } from './utils';
+
+import { useEffect } from '@wordpress/element';
+
+import { useDebounce } from "@uidotdev/usehooks";
+
+import { useGroupsLoader } from './hooks/api';
 
 import SchedulerInspectorControls from './components/SchedulerInspectorControls';
 import SchedulerResizableBlock from './components/SchedulerResizableBlock';
@@ -41,18 +46,32 @@ import SchedulerPreview      from './components/SchedulerPreview';
 export default function Edit( { attributes, setAttributes, toggleSelection } ) {
         
     const blockProps = useBlockProps({
-        style: {
-            border: "10px dotted blue"
-        }
+        style: {}
     });
     
     const {
         width,
         height,
+        namespace,
         ...listenedSchedulerProps
     } = attributes;
     
-    const schedulerPreviewKey = JSON.stringify(listenedSchedulerProps);
+    const groupsLoader = useGroupsLoader({ namespace });
+    
+    const debouncedNamespace = useDebounce(namespace, 250);
+    useEffect(() => {
+        if (attributes.showGroups) {
+            groupsLoader.exec();
+        }
+    }, [attributes.showGroups, debouncedNamespace]);
+    
+    const schedulerPreviewKey = JSON.stringify({
+        ...listenedSchedulerProps,
+        groups: groupsLoader.results
+    });
+    
+    const isGroupsReloading = groupsLoader.isPending ||
+        debouncedNamespace != namespace;
     
     return (
         <>
@@ -61,6 +80,8 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                 attributes    = { attributes }
                 setAttributes = { setAttributes }
                 blockProps    = { blockProps }
+                groupsLoader  = { groupsLoader }
+                isGroupsReloading = { isGroupsReloading }
             />
 
             <SchedulerResizableBlock
@@ -73,6 +94,7 @@ export default function Edit( { attributes, setAttributes, toggleSelection } ) {
                     key             = { schedulerPreviewKey }
                     attributes      = { attributes }
                     blockProps      = { blockProps }
+                    groups          = { groupsLoader.results }
                 />   
             </SchedulerResizableBlock>
 
