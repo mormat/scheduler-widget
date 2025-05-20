@@ -27,6 +27,16 @@ function cleanSchedulerProps(props) {
         delete props.locale;
     }
     
+    if (props.groups) {
+        props.groups = props.groups.map(function(item) {
+            const { label, ...otherValues } = item;
+            return {
+                text: label,
+                ...otherValues
+            }
+        });
+    }
+    
     return props;
     
 }

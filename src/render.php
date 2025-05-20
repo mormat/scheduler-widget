@@ -37,6 +37,14 @@ if (!$props['locale']) {
     $props['locale'] = get_locale();
 }
 
+if ($props['showGroups']) {
+    $props['groups'] = scheduler_widget_load_groups( [
+        'namespace' => $props['namespace']
+    ] );
+} else {
+    $props['groups'] = [];
+}
+
 $urls = array_map(fn($url) => wp_nonce_url($url, 'scheduler_widget_events'), [
     'saveEvent' => admin_url('admin-ajax.php?' . http_build_query([
         'action' => 'scheduler_widget_save_event',

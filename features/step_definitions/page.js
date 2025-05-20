@@ -21,3 +21,20 @@ Then('I should see {string}', async function (expectedText) {
     
 });
 
+Then('I should see:', async function (dataTable) {
+    
+    const pageText = await this.getPageText();
+    
+    for (const row of dataTable.raw()) {
+        expect(pageText).toContain(row[0]);
+    }
+    
+})
+
+Then('I should not see {string}', async function (expectedText) {
+    
+    const pageText = await this.getPageText();
+    
+    expect(pageText).not.toContain(expectedText);
+    
+});

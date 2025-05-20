@@ -8,25 +8,69 @@ import {
     TextControl, 
     ToggleControl, 
     SelectControl, 
-    NumberControl 
+    NumberControl,
+    CheckboxControl
 } from '@wordpress/components';
+
+import apiFetch from '@wordpress/api-fetch';
+import { addQueryArgs } from '@wordpress/url';
+
+import { useState, useEffect } from '@wordpress/element';
+import { useSelect } from "@wordpress/data";
 
 import {
     getAlignFromBlockProps
 } from '../utils';
 
+import ManageGroupsButton from './ManageGroupsButton';
+
+import { useGroupsSaver } from '../hooks/api';
+
 function SchedulerInspectorControls({ 
     attributes, 
     setAttributes, 
-    blockProps 
+    blockProps,
+    groupsLoader,
+    isGroupsReloading
 }) {
+    
+    const { namespace } = attributes;
+    
+    const groupsSaver = useGroupsSaver({ namespace });
 
     const align = getAlignFromBlockProps(blockProps);
+    
+    async function handleSaveGroups(data) {
+        await groupsSaver.exec({ data });
+        await groupsLoader.exec();
+    }
 
     return (
         <InspectorControls>
                 
             <PanelBody title={ __( 'Settings', 'scheduler-widget' ) }>
+
+                <CheckboxControl
+                    value = { attributes.showGroups }
+                    onChange = { ( value ) =>
+                        setAttributes( { showGroups: value } )
+                    }
+                    checked = { attributes.showGroups }
+                    label={ __('Display groups', 'scheduler-widget') }
+                    __nextHasNoMarginBottom
+                />
+
+                <ManageGroupsButton 
+                    onAsyncLoad = { () => groupsLoader.results }
+                    onAsyncSave = { handleSaveGroups }
+                    disabled = { 
+                        !attributes.showGroups || 
+                        isGroupsReloading || 
+                        groupsSaver.isPending 
+                    }
+                />
+                    
+                <hr/>
 
                 <SelectControl
                     value={ attributes.viewMode }
@@ -54,7 +98,7 @@ function SchedulerInspectorControls({
                     ] }
                     
                 />
-
+                
                 <TextControl
                     value={ attributes.initialDate }
                     onChange={ v => setAttributes( { initialDate: v } ) }

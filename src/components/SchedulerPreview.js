@@ -1,28 +1,15 @@
 
-import { Scheduler } from '@mormat/react-scheduler';
+import Scheduler from './Scheduler';
 
 import {
-    getAlignFromBlockProps,
-    cleanSchedulerProps
+    getAlignFromBlockProps
 } from '../utils';
 
 
-function SchedulerPreview({ attributes, blockProps }) {
+function SchedulerPreview({ attributes, blockProps, groups }) {
     
     const align = getAlignFromBlockProps(blockProps);
     const width = ['full', 'width'].includes(align) ? 'aito': attributes.width;
-    
-    const { 
-        initialDate, 
-        viewMode, 
-        height, 
-        minHour, 
-        maxHour,
-        namespace,
-        locale
-    } = attributes;
-    
-    const schedulerProps = cleanSchedulerProps( attributes );
     
     return (
         <div style = {{ 
@@ -32,10 +19,11 @@ function SchedulerPreview({ attributes, blockProps }) {
         }}>
 
             <Scheduler 
-                    { ... schedulerProps }
+                    { ... attributes }
                     editable    = { false }
                     draggable   = { false }
                     useBreakpoint = { true }
+                    groups = { groups }
             />
 
             <div style = {{
