@@ -1,27 +1,40 @@
 
 class WordpressHelper {
     
-    #baseUrl;
     #world;
+    #baseUrl;
     
-    constructor({ baseUrl, baseFolder, world }) {
+    constructor({ baseUrl, world }) {
         this.#baseUrl = baseUrl;
         this.#world = world;
     }   
+        
+    async fillValue(label, value) {
+        const labelElement = await this.#world.getElement(
+            `label:contains("${ label }")`
+        );
+
+        const inputSelector = '#' + await labelElement.getAttribute('for');
+        const inputElement = await this.#world.getElement(inputSelector);
+        await inputElement.click();
+        await this.#world.waitForActiveElement(inputElement);
+        
+        await inputElement.clear();
+        await inputElement.sendKeys(value);
+    }
         
     async login({username, password}) {
         
         await this.#world.openUrl('/wp-login.php/');
         
-        await this.#world.clickOn(`label:contains("Username")`);
-        await this.#world.getActiveElement().sendKeys( username );
+        const loginButton = `input[value="Log In"]`;
         
-        await this.#world.clickOn(`label:contains("Password")`);
-        await this.#world.getActiveElement().sendKeys( password );
+        await this.fillValue("Username", username);
+        await this.fillValue("Password", password);
         
-        await this.#world.clickOn(`input[value="Log In"]`);
+        await this.#world.clickOn(loginButton);
         await this.#world.waitForText("Dashboard");
-        
+                
     }
     
     async activatePlugin( pluginName ) {
@@ -30,9 +43,14 @@ class WordpressHelper {
         await this.#world.clickOn(`a:contains("Plugins")`);
         
         const parent = `td:contains("${pluginName}") `;
-        const button = `a:contains("Activate")`;
+        const activateButton = `a:contains("Activate")`;
+        const deactivateButton = `a:contains("Deactivate")`;
         
-        await this.#world.clickOn(parent + button);
+        if (await this.#world.hasElement(parent + deactivateButton)) {
+            return;
+        }
+        
+        await this.#world.clickOn(parent + activateButton);
     }
     
     async activateTheme( themeName ) {

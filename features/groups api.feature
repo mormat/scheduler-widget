@@ -4,7 +4,6 @@ Feature: Groups API
     Background:
         Given Wordpress has been freshly installed
 
-    @first
     Scenario: GET /api/v1/groups
         When I send a GET request to "?rest_route=/api/v1/groups" 
         Then I should get a 200 response with JSON below:
@@ -14,9 +13,9 @@ Feature: Groups API
             }
         ```
 
-    @first
     Scenario: POST /api/v1/groups with missing 'groups' attributes
-        When I send a POST request to "?rest_route=/api/v1/groups" with the JSON below: 
+        Given I am logged as "admin"
+        When I send a secured POST request to "?rest_route=/api/v1/groups" with the JSON below: 
         ```
             {}
         ```
@@ -26,7 +25,8 @@ Feature: Groups API
         ```
 
     Scenario: POST /api/v1/groups with missing 'label' attribute
-        When I send a POST request to "?rest_route=/api/v1/groups" with the JSON below: 
+        Given I am logged as "admin"
+        When I send a secured POST request to "?rest_route=/api/v1/groups" with the JSON below: 
         ```
             {
                 "groups": [
@@ -39,7 +39,7 @@ Feature: Groups API
             label is a required property of groups[0].
         ```
 
-    Scenario: POST /api/v1/groups should return incremented id after inserting items
+    Scenario: POST /api/v1/groups should return 401 for anonymous user
         When I send a POST request to "?rest_route=/api/v1/groups" with the JSON below: 
         ```
             {
@@ -48,17 +48,14 @@ Feature: Groups API
                 ]
             }
         ```
-        Then I should get a 200 response with JSON below:
+        Then I should get 401 response containing:
         ```
-            {
-                "groups": [
-                    { "id": 1, "label": "Room A" }
-                ]
-            }
+            not allowed
         ```
 
     Scenario: POST /api/v1/groups should remove CSRF attacks
-        When I send a POST request to "?rest_route=/api/v1/groups" with the JSON below: 
+        Given I am logged as "admin"
+        When I send a secured POST request to "?rest_route=/api/v1/groups" with the JSON below: 
         ```
             {
                 "groups": [
@@ -79,7 +76,8 @@ Feature: Groups API
     Rule: Using pre-populated items
 
         Background:
-           When I send a POST request to "?rest_route=/api/v1/groups" with the JSON below: 
+            Given I am logged as "admin"
+            When I send a secured POST request to "?rest_route=/api/v1/groups" with the JSON below: 
             ```
                 {
                     "groups": [
@@ -104,7 +102,8 @@ Feature: Groups API
             ```
 
         Scenario: POST /api/v1/groups should update existing item
-            When I send a POST request to "?rest_route=/api/v1/groups" with the JSON below: 
+            Given I am logged as "admin"
+            When I send a secured POST request to "?rest_route=/api/v1/groups" with the JSON below: 
             ```
                 {
                     "groups": [
@@ -125,7 +124,8 @@ Feature: Groups API
             ```
 
         Scenario: POST /api/v1/groups should delete existing item
-            When I send a POST request to "?rest_route=/api/v1/groups" with the JSON below: 
+            Given I am logged as "admin"
+            When I send a secured POST request to "?rest_route=/api/v1/groups" with the JSON below: 
             ```
                 {
                     "groups": [
@@ -145,7 +145,8 @@ Feature: Groups API
             ```
 
         Scenario: handling namespaces
-            When I send a POST request to "?rest_route=/api/v1/groups&namespace=persons" with the JSON below: 
+            Given I am logged as "admin"
+            When I send a secured POST request to "?rest_route=/api/v1/groups&namespace=persons" with the JSON below: 
             ```
                 {
                     "groups": [

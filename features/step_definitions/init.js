@@ -49,6 +49,24 @@ setWorldConstructor( class extends SeleniumWorld {
         return this.#helpers['wordpress'];
     }
     
+    async hasElement(selector) {
+        const elements = await this.findElements(selector);
+        return (elements.length > 0);
+    }
+    
+    // Apparently, it takes a little time to get the focus an element when we click on it
+    // for some reasons I didn't find out yet
+    async waitForActiveElement(expectedElement) {
+        let attempts = 0;
+        while (attempts++ < 10) {
+            const activeElement = await this.getActiveElement();
+            if (activeElement === expectedElement) {
+                return;
+            }
+            this.wait(100);
+        }
+    }
+    
     async waitFor(selector, { timeout = 10002 } = {}) {
         
         let   attempts = 0;
@@ -72,12 +90,13 @@ setWorldConstructor( class extends SeleniumWorld {
         
     }
     
+
+    
 } );
 
 BeforeAll(async function() {
     
     if (!fs.existsSync( WORDPRESS_FOLDER )) {
-        console.log("downloading WordPress");
         await installWordPress( TEMP_FOLDER );
     }
     

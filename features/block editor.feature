@@ -33,7 +33,7 @@ Feature: using the widget in the Block Editor
     @groups
     Scenario: updating and deleting groups
         When I am logged as "admin"
-        And I send a POST request to "?rest_route=/api/v1/groups" with the JSON below: 
+        And I send a secured POST request to "?rest_route=/api/v1/groups" with the JSON below: 
             ```
                 {
                     "groups": [
@@ -58,7 +58,7 @@ Feature: using the widget in the Block Editor
     @groups @namespace
     Scenario: the namespace should display another set of groups
         When I am logged as "admin"
-        And I send a POST request to "?rest_route=/api/v1/groups" with the JSON below: 
+        And I send a secured POST request to "?rest_route=/api/v1/groups" with the JSON below: 
             ```
                 {
                     "groups": [

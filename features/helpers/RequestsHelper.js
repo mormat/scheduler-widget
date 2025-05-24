@@ -19,13 +19,12 @@ class RequestsHelper {
         return this.#response.data;
     }
     
-    async send(url, { method = 'get', data }) {
+    async send(url, { method = 'get', data, headers }) {
         // https://axios-http.com/docs/req_config
-        
         try {
             this.#response = await this.#axios({
                 url : url, 
-                method, data
+                method, data, headers
             });
         } catch (error) {
             this.#response = error.response;
@@ -37,8 +36,8 @@ class RequestsHelper {
         await this.send(url, { method: 'get' });
     }
         
-    async sendPost(url, data) {
-        await this.send(url, { method: 'post', data });
+    async sendPost(url, data, options) {
+        await this.send(url, { method: 'post', data, ...options });
     }
         
 }

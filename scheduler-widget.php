@@ -298,11 +298,14 @@ function scheduler_widget_build_groups_api($controllers) {
     return [
         [
             'methods' => 'GET',
-            'callback' => $controllers['GET']
+            'callback' => $controllers['GET'],
         ],
         [
             'methods' => 'POST',
             'callback' => $controllers['POST'],
+            'permission_callback' => function(WP_REST_Request $request) {
+                return current_user_can('edit_posts');
+            },
             'args'=> $args,
         ]
     ];
@@ -355,3 +358,12 @@ function scheduler_widget_rest_api_init() {
 }
 
 add_action('rest_api_init', 'scheduler_widget_rest_api_init');
+
+/*
+function output_nonce() {
+  $nonce = wp_create_nonce('wp_rest');
+    printf('nonce %s', $nonce);
+}
+
+add_action( 'admin_notices', 'output_nonce' );
+*/
