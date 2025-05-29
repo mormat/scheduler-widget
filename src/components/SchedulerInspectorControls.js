@@ -9,21 +9,18 @@ import {
     ToggleControl, 
     SelectControl, 
     NumberControl,
-    CheckboxControl
+    CheckboxControl,
+    BaseControl,
+    Flex, 
+    FlexBlock, 
+    FlexItem
 } from '@wordpress/components';
 
-import apiFetch from '@wordpress/api-fetch';
-import { addQueryArgs } from '@wordpress/url';
+import { useState } from '@wordpress/element';
 
-import { useState, useEffect } from '@wordpress/element';
-import { useSelect } from "@wordpress/data";
-
-import {
-    getAlignFromBlockProps
-} from '../utils';
+import { getAlignFromBlockProps } from '../utils';
 
 import ManageGroupsButton from './ManageGroupsButton';
-
 import { useGroupsSaver } from '../hooks/api';
 
 function SchedulerInspectorControls({ 
@@ -48,30 +45,43 @@ function SchedulerInspectorControls({
     return (
         <InspectorControls>
                 
-            <PanelBody title={ __( 'Settings', 'scheduler-widget' ) }>
-
-                <CheckboxControl
-                    value = { attributes.showGroups }
-                    onChange = { ( value ) =>
-                        setAttributes( { showGroups: value } )
-                    }
-                    checked = { attributes.showGroups }
-                    label={ __('Display groups', 'scheduler-widget') }
-                    __nextHasNoMarginBottom
-                />
-
-                <ManageGroupsButton 
-                    onAsyncLoad = { () => groupsLoader.results }
-                    onAsyncSave = { handleSaveGroups }
-                    disabled = { 
-                        !attributes.showGroups || 
-                        isGroupsReloading || 
-                        groupsSaver.isPending 
-                    }
-                />
+            <PanelBody title={ __( 'Main settings', 'scheduler-widget' ) }
+                className="scheduler-widget-settings-panel"
+            >
+                <BaseControl 
+                    label={ __('Events groups','scheduler-widget') }
+                >
+                    <Flex>  
+                        <FlexItem>
+                            <CheckboxControl
+                                value = { attributes.showGroups }
+                                onChange = { ( value ) =>
+                                    setAttributes( { showGroups: value } )
+                                }
+                                checked = { attributes.showGroups }
+                                label={ __('Display groups', 'scheduler-widget') }
+                                __nextHasNoMarginBottom
+                            />
+                        </FlexItem>
+                        <FlexBlock
+                            style={{ 
+                                display: "flex", 
+                                justifyContent: "right", 
+                            }}
+                        >
+                            <ManageGroupsButton 
+                                onAsyncLoad = { () => groupsLoader.results }
+                                onAsyncSave = { handleSaveGroups }
+                                disabled = { 
+                                    !attributes.showGroups || 
+                                    isGroupsReloading || 
+                                    groupsSaver.isPending 
+                                }
+                            />
+                        </FlexBlock>
+                    </Flex>
+                </BaseControl>
                     
-                <hr/>
-
                 <SelectControl
                     value={ attributes.viewMode }
                     onChange={ ( value ) =>
@@ -107,42 +117,33 @@ function SchedulerInspectorControls({
                     type="date"
                 />
 
-                <TextControl
-                    value={ attributes.minHour }
-                    onChange={ v => setAttributes( { minHour: v } ) }
-                    label={ __( 'Hour min', 'scheduler-widget' ) }
-                    type="number"
-                    min = "5"
-                    max = "10"
-                />
-
-                <TextControl
-                    value={ attributes.maxHour }
-                    onChange={ v => setAttributes( { maxHour: v } ) }
-                    label={ __( 'Hour max', 'scheduler-widget' ) }
-                    type="number"
-                    min = "18"
-                    max = "22"
-                />                        
-
-                <TextControl
-                    value = { attributes.width }
-                    onChange={ v => setAttributes( { width: v } ) }
-                    label={ __( 'Width (px)', 'scheduler-widget' ) }
-                    min = "480"
-                    max = "1080"
-                    type="number"
-                    disabled = { ['full', 'wide'].includes(align) }
-                />
-
-                <TextControl
-                    value = { attributes.height }
-                    onChange = { v => setAttributes( { height: v } ) }
-                    label = { __( 'Height (px)', 'scheduler-widget' ) }
-                    min = "480"
-                    max = "1080"
-                    type="number"
-                />
+                <BaseControl
+                    label={ __('Size','scheduler-widget') }
+                >
+                    <Flex>
+                        <FlexBlock>
+                            <TextControl
+                                value = { attributes.width }
+                                onChange={ v => setAttributes( { width: v } ) }
+                                label={ __( 'width (px)', 'scheduler-widget' ) }
+                                min = "480"
+                                max = "1080"
+                                type="number"
+                                disabled = { ['full', 'wide'].includes(align) }
+                            />    
+                        </FlexBlock>
+                        <FlexBlock>
+                            <TextControl
+                                value = { attributes.height }
+                                onChange = { v => setAttributes( { height: v } ) }
+                                label = { __( 'height (px)', 'scheduler-widget' ) }
+                                min = "480"
+                                max = "1080"
+                                type="number"
+                            />    
+                        </FlexBlock>
+                    </Flex>
+                </BaseControl>
 
                 <TextControl
                     value={ attributes.namespace }
@@ -159,6 +160,37 @@ function SchedulerInspectorControls({
                     placeholder= { __("Examples: en, fr or es", 'scheduler-widget') }
                 />
 
+            </PanelBody>
+
+            <PanelBody title={ __( 'Week settings', 'scheduler-widget' ) }
+                className="scheduler-widget-settings-panel"
+            >
+                <BaseControl
+                    label={ __('Hour range','scheduler-widget') }
+                >
+                    <Flex>
+                        <FlexBlock>
+                            <TextControl
+                                value={ attributes.minHour }
+                                onChange={ v => setAttributes( { minHour: v } ) }
+                                label={ __( 'hour min', 'scheduler-widget' ) }
+                                type="number"
+                                min = "5"
+                                max = "10"
+                            />
+                        </FlexBlock>
+                        <FlexBlock>
+                            <TextControl
+                                value={ attributes.maxHour }
+                                onChange={ v => setAttributes( { maxHour: v } ) }
+                                label={ __( 'hour max', 'scheduler-widget' ) }
+                                type="number"
+                                min = "18"
+                                max = "22"
+                            />
+                        </FlexBlock>
+                    </Flex>
+                </BaseControl>
             </PanelBody>
 
         </InspectorControls>        

@@ -9,3 +9,15 @@
 }
 
 @import '@mormat/react-scheduler/dist/react_scheduler';
+
+.scheduler-widget-settings-panel  {
+    
+    .components-flex-item .components-base-control {
+        label {
+            font-weight: normal;
+            text-transform: none;
+            margin-bottom: 0;
+        }
+    }
+    
+}
