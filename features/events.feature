@@ -63,7 +63,7 @@ Feature: CRUD on scheduler events
         Then I should only see "Meeting" once
         And the "Meeting" event should be displayed at "Thu, May 1" from '10:00' to '12:00'
 
-    @groups @wtf
+    @groups
     Scenario: group of events should be saved
         Given I edit the "Agenda" page
         And I select the "Scheduler" block

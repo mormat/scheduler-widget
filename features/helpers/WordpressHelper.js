@@ -8,6 +8,10 @@ class WordpressHelper {
         this.#baseUrl = baseUrl;
         this.#world = world;
     }   
+    
+    get driver() {
+        return this.#world.driver;
+    }
         
     async login({username, password}) {
         
@@ -136,6 +140,12 @@ class WordpressHelper {
             }
             this.#world.wait(100);
         }
+    }
+    
+    async selectBlock(blockName) {
+        await this.driver.switchTo().frame(0);
+        await this.#world.clickOn(`.wp-block[data-title="${blockName}"]`);
+        await this.driver.switchTo().defaultContent();
     }
     
 }

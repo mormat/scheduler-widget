@@ -41,17 +41,33 @@ When(
 
 When('I select the {string} block', async function (blockName) {
     
-    await this.driver.switchTo().frame(0);
-    await this.clickOn(`.wp-block[data-title="${blockName}"]`);
-    await this.driver.switchTo().defaultContent();
+    this.wordpress.selectBlock(blockName);
     
 });
 
+When('I set the alignment of the {string} block to {string}', async function (blockName, alignValue) {
+    
+    this.wordpress.selectBlock(blockName);
+    
+    await this.waitFor('button[aria-label="Align"]');
+    await this.clickOn('button[aria-label="Align"]');
+    await this.waitFor(`button:contains("${alignValue}")`);
+    await this.clickOn(`button:contains("${alignValue}")`);
+});
+
 When('I publish and view the page', async function () {
-    await this.clickOn(`button:contains('Publish')`);
-    await this.clickOn(`.editor-post-publish-panel button:contains('Publish')`);
-    await this.waitFor(`a:contains("View Page")`);
-    await this.clickOn(`a:contains("View Page")`);
+    
+    const buttons = [
+        `button:contains('Publish')`,
+        `.editor-post-publish-panel button:contains('Publish')`,
+        `a:contains("View Page")`
+    ]
+    
+    for (const button of buttons) {
+        await this.waitFor(button);
+        await this.clickOn(button);
+    }
+
 });
 
 When('I save and view the page', async function () {

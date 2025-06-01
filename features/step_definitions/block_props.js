@@ -4,6 +4,7 @@ const {
 
 When('I enable the groups display', async function () {
 
+    await this.waitFor(`label:contains("Display groups")`);
     await this.clickOn(`label:contains("Display groups")`);
     
 });
@@ -72,6 +73,7 @@ When('I save the groups list', async function () {
 
 When('I change the {string} of the scheduler to {string}', async function (propertyName, value) {
 
+    await this.waitFor(`label:contains("${propertyName}")`);
     await this.clickOn(`label:contains("${propertyName}")`);
     
     const input = await this.getActiveElement();

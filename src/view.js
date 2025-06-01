@@ -58,9 +58,9 @@ function View({element}) {
         if (props.width) {
             element.style['width'] = props.width + 'px';
         }
-        if (props.width) {
-            element.style['height'] = props.height + 'px';
-        }
+    }
+    if (props.height) {
+        element.style['height'] = props.height + 'px';
     }
 
     props.onEventCreate = function(values, { scheduler }) {

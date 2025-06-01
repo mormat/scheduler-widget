@@ -21,8 +21,6 @@ function Scheduler( props ) {
         delete props.locale;
     }
     
-    console.log({props});
-    
     props.groups = [
         ...(props.groups || []),
         {id: null, label: ''}

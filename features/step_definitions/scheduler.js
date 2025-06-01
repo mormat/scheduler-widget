@@ -88,3 +88,39 @@ Then('the {string} event should be displayed between {string} and {string} in th
        inGroup
     );        
 });
+
+Then('the width of the scheduler should be {int} %', async function (expected) {
+         
+    const element = await this.getElement('.mormat-scheduler');
+    
+    const rect = await element.getRect();
+    
+    const bodyElement = await this.getElement('body');
+    
+    const bodyRect = await bodyElement.getRect();
+    
+    const actual = Math.round((rect.width / bodyRect.width) * 100);
+    
+    expect(actual).toBe(expected);
+    
+});
+
+Then('the width of the scheduler should be {int} px', async function (expected) {
+
+    const element = await this.getElement('.mormat-scheduler');
+    
+    const rect = await element.getRect();
+    
+    expect(rect.width).toBe(expected);
+
+});
+
+Then('the height of the scheduler should be {int} px', async function (expected) {
+
+    const element = await this.getElement('.mormat-scheduler');
+    
+    const rect = await element.getRect();
+    
+    expect(rect.height).toBe(expected);
+
+});
